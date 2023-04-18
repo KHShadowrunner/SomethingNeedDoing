@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClickLib;
 using ClickLib.Exceptions;
 using Dalamud.Logging;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using SomethingNeedDoing.Exceptions;
 using SomethingNeedDoing.Grammar.Modifiers;
 using SomethingNeedDoing.Misc;
@@ -55,10 +56,20 @@ internal class ClickCommand : MacroCommand
     public async override Task Execute(ActiveMacro macro, CancellationToken token)
     {
         PluginLog.Debug($"Executing: {this.Text}");
+        PluginLog.Debug($"Executing: {this.clickName}");
 
         try
         {
-            Click.SendClick(this.clickName.ToLowerInvariant());
+            if (this.clickName == "Leave")
+            {
+                PluginLog.Debug($"Sending LeaveCheck");
+                LeaveCheck();
+            }
+            else
+            {
+                PluginLog.Debug($"Sending Click");
+                Click.SendClick(this.clickName.ToLowerInvariant());
+            }
         }
         catch (ClickNotFoundError)
         {
@@ -71,5 +82,18 @@ internal class ClickCommand : MacroCommand
         }
 
         await this.PerformWait(token);
+    }
+
+    private static unsafe void LeaveCheck()
+    {
+        var addon = (AtkUnitBase*)Service.GameGui.GetAddonByName("ContentsFinderMenu");
+        var values = stackalloc AtkValue[1];
+        values[0] = new AtkValue()
+        {
+            Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int,
+            Int = 0,
+        };
+        PluginLog.Debug($"Executing FireCallback");
+        addon->FireCallback(1, values, (void*)1903079317505);
     }
 }
