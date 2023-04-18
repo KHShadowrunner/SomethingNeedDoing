@@ -1,5 +1,7 @@
 ## Something Need Doing
 
+Fork of the plugin created by the genius person themselves: Daemitus. Personal Project.
+
 This plugin gives you control of a little Orc peon that does things for you. 
 Specifically, crafting. 
 It's a better way of storing and running all your different macros.
