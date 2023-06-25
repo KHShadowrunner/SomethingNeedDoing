@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.Transactions;
 using ClickLib;
 using ClickLib.Exceptions;
 using Dalamud.Logging;
@@ -65,6 +65,11 @@ internal class ClickCommand : MacroCommand
                 PluginLog.Debug($"Sending LeaveCheck");
                 LeaveCheck();
             }
+            else if (this.clickName == "Join")
+            {
+                PluginLog.Debug("$Sending JoinCheck");
+                JoinCheck();
+            }
             else
             {
                 PluginLog.Debug($"Sending Click");
@@ -95,5 +100,31 @@ internal class ClickCommand : MacroCommand
         };
         PluginLog.Debug($"Executing FireCallback");
         addon->FireCallback(1, values, (void*)1903079317505);
+    }
+
+    private static unsafe void JoinCheck()
+    {
+        var addon = (AtkUnitBase*)Service.GameGui.GetAddonByName("ContentsFinder");
+        var addon2 = (AtkUnitBase*)Service.GameGui.GetAddonByName("JournalDetail");
+        var values = stackalloc AtkValue[2];
+        values[0] = new AtkValue()
+        {
+            Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int,
+            Int = 12,
+        };
+        values[1] = new AtkValue()
+        {
+            Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int,
+            Int = 0,
+        };
+        var values2 = stackalloc AtkValue[1];
+        values2[0] = new AtkValue()
+        {
+            Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int,
+            Int = -2,
+        };
+        PluginLog.Debug($"Executing FireCallback");
+        addon2->FireCallback(1, values2, null);
+        addon->FireCallback(2, values, null);
     }
 }

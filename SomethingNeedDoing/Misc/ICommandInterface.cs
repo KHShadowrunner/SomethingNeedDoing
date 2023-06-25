@@ -184,4 +184,12 @@ public interface ICommandInterface
     /// <param name="index">Item number, 0 indexed.</param>
     /// <returns>The item text, or an empty string.</returns>
     public string GetSelectIconStringText(int index);
+
+    // EXPERIMENTAL
+    /// <summary>
+    /// Check to see if a spell is being cast
+    /// </summary>
+    public bool IsCasting();
+
+    public bool InCombat();
 }
