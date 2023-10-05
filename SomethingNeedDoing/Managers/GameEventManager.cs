@@ -6,6 +6,7 @@ using Dalamud.Logging;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using SomethingNeedDoing.CraftingData;
+using SomethingNeedDoing.DalamudServices.Legacy;
 
 namespace SomethingNeedDoing.Managers;
 

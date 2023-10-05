@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Dalamud.Logging;
+using SomethingNeedDoing.DalamudServices.Legacy;
 using SomethingNeedDoing.Exceptions;
 using SomethingNeedDoing.Grammar.Modifiers;
 using SomethingNeedDoing.Misc;
