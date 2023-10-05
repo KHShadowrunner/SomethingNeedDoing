@@ -19,6 +19,7 @@ internal class SendCommand : MacroCommand
 {
     private static readonly Regex Regex = new(@"^/send\s+(?<name>.*?)\s*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+    private readonly int hold = 1;
     private readonly VirtualKey[] vkCodes;
 
     /// <summary>
@@ -27,10 +28,12 @@ internal class SendCommand : MacroCommand
     /// <param name="text">Original text.</param>
     /// <param name="vkCodes">VirtualKey codes.</param>
     /// <param name="wait">Wait value.</param>
-    private SendCommand(string text, VirtualKey[] vkCodes, WaitModifier wait)
+    /// <param name="seconds">Hold value.</param>
+    private SendCommand(string text, VirtualKey[] vkCodes, WaitModifier wait, int seconds)
         : base(text, wait)
     {
         this.vkCodes = vkCodes;
+        this.hold = seconds;
     }
 
     /// <summary>
@@ -41,6 +44,21 @@ internal class SendCommand : MacroCommand
     public static SendCommand Parse(string text)
     {
         _ = WaitModifier.TryParse(ref text, out var waitModifier);
+
+        // Experimental Code
+        text = text.Trim();
+        var seconds = 1;
+        var firstSpace = text.IndexOf(' ');
+        var moreSpace = text.LastIndexOf(' ');
+        var textHold = text.Substring(moreSpace + 1);
+        if (firstSpace != moreSpace && char.IsDigit(text[moreSpace + 1]))
+        {
+            // var textHold = text.Substring(moreSpace + 1);
+            seconds = Convert.ToInt32(textHold);
+            text = text.Substring(0, moreSpace);
+            PluginLog.Debug($"Int value seconds = {seconds * 100}");
+        }
+        // End Code
 
         var match = Regex.Match(text);
         if (!match.Success)
@@ -57,7 +75,7 @@ internal class SendCommand : MacroCommand
             })
             .ToArray();
 
-        return new SendCommand(text, vkCodes, waitModifier);
+        return new SendCommand(text, vkCodes, waitModifier, seconds);
     }
 
     /// <inheritdoc/>
@@ -67,7 +85,7 @@ internal class SendCommand : MacroCommand
 
         if (this.vkCodes.Length == 1)
         {
-            Keyboard.Send(this.vkCodes[0]);
+            Keyboard.Send(this.vkCodes[0], null, this.hold);
         }
         else
         {

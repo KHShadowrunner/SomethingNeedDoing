@@ -205,4 +205,16 @@ public interface ICommandInterface
     /// </summary>
     /// <returns>Returns the current zone's ID, int.</returns>
     public int GetZoneID();
+
+    /// <summary>
+    /// Check to see if a spell is being cast
+    /// </summary>'=
+    /// <returns>Returns true if the player is casting, false otherwise.</returns>
+    public bool IsCasting();
+
+    /// <summary>
+    /// Check to see if a spell is being cast
+    /// </summary>'=
+    /// <returns>Returns true if the player is in combat, false otherwise.</returns>
+    public bool InCombat();
 }

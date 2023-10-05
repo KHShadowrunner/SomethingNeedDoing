@@ -470,4 +470,13 @@ public class CommandInterface : ICommandInterface
 
         return (AddonSynthesis*)ptr;
     }
+
+    /// <summary>
+    /// EXPERIMENTAL.
+    /// </summary>
+    public bool IsCasting()
+        => Service.Condition[ConditionFlag.Casting];
+
+    public bool InCombat()
+    => Service.Condition[ConditionFlag.InCombat];
 }
