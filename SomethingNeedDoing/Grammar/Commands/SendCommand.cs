@@ -18,8 +18,9 @@ namespace SomethingNeedDoing.Grammar.Commands;
 internal class SendCommand : MacroCommand
 {
     private static readonly Regex Regex = new(@"^/send\s+(?<name>.*?)\s*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+    // Experimental Code
     private readonly int hold = 1;
+    // End Code
     private readonly VirtualKey[] vkCodes;
 
     /// <summary>
@@ -28,12 +29,14 @@ internal class SendCommand : MacroCommand
     /// <param name="text">Original text.</param>
     /// <param name="vkCodes">VirtualKey codes.</param>
     /// <param name="wait">Wait value.</param>
-    /// <param name="seconds">Hold value.</param>
+    /// <param name="seconds">Hold value for keypress.</param>
     private SendCommand(string text, VirtualKey[] vkCodes, WaitModifier wait, int seconds)
         : base(text, wait)
     {
         this.vkCodes = vkCodes;
+        // Experimental Code
         this.hold = seconds;
+        // End Code
     }
 
     /// <summary>

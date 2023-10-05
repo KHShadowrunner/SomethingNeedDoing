@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-
 using ClickLib;
 using ClickLib.Exceptions;
 using Dalamud.Logging;
@@ -57,6 +56,7 @@ internal class ClickCommand : MacroCommand
     public async override Task Execute(ActiveMacro macro, CancellationToken token)
     {
         PluginLog.Debug($"Executing: {this.Text}");
+        PluginLog.Debug($"Executing: {this.clickName}");
 
         try
         {
@@ -88,6 +88,7 @@ internal class ClickCommand : MacroCommand
 
         await this.PerformWait(token);
     }
+
     private static unsafe void LeaveCheck()
     {
         var addon = (AtkUnitBase*)Service.GameGui.GetAddonByName("ContentsFinderMenu");
@@ -100,6 +101,7 @@ internal class ClickCommand : MacroCommand
         PluginLog.Debug($"Executing FireCallback");
         addon->FireCallback(1, values, (void*)1903079317505);
     }
+
     private static unsafe void JoinCheck()
     {
         var addon = (AtkUnitBase*)Service.GameGui.GetAddonByName("ContentsFinder");

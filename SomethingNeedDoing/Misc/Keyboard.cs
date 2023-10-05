@@ -41,6 +41,7 @@ internal static class Keyboard
                 foreach (var mod in mods)
                     _ = SendMessage(hWnd, WM_KEYDOWN, (IntPtr)mod, IntPtr.Zero);
             }
+            PluginLog.Debug("Entered The normal route");
 
             _ = SendMessage(hWnd, WM_KEYDOWN, (IntPtr)key, IntPtr.Zero);
             Thread.Sleep(100);
@@ -53,6 +54,41 @@ internal static class Keyboard
             }
         }
     }
+    // Experimental
+
+    /// <summary>
+    /// Send a virtual key with modifiers for a selected hold time.
+    /// </summary>
+    /// <param name="key">Key to send.</param>
+    /// <param name="mods">Modifiers to press.</param>
+    /// <param name="seconds">How long to hold key down.</param>
+    public static void Send(VirtualKey key, IEnumerable<VirtualKey>? mods, int seconds)
+    {
+        const int WM_KEYDOWN = 0x100;
+        const int WM_KEYUP = 0x101;
+
+        if (key != 0)
+        {
+            var hWnd = handle ??= Process.GetCurrentProcess().MainWindowHandle;
+
+            if (mods != null)
+            {
+                foreach (var mod in mods)
+                    _ = SendMessage(hWnd, WM_KEYDOWN, (IntPtr)mod, IntPtr.Zero);
+            }
+            PluginLog.Debug("Entered The experiment route");
+            _ = SendMessage(hWnd, WM_KEYDOWN, (IntPtr)key, IntPtr.Zero);
+            Thread.Sleep(100 * seconds);
+            _ = SendMessage(hWnd, WM_KEYUP, (IntPtr)key, IntPtr.Zero);
+
+            if (mods != null)
+            {
+                foreach (var mod in mods)
+                    _ = SendMessage(hWnd, WM_KEYUP, (IntPtr)mod, IntPtr.Zero);
+            }
+        }
+    }
+
     // Experimental
 
     /// <summary>

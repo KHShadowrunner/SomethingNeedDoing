@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Logging;
+using Dalamud.Utility;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.UI;
