@@ -480,4 +480,19 @@ public class CommandInterface : ICommandInterface
 
     public bool InCombat()
     => Service.Condition[ConditionFlag.InCombat];
+
+    public float GetXPosition()
+    {
+        if (Service.ClientState.LocalPlayer == null) return 0;
+        var position = Service.ClientState.LocalPlayer.Position.X;
+        return position;
+    }
+
+    public float GetZPosition()
+    {
+        if (Service.ClientState.LocalPlayer == null) return 0;
+        var position = Service.ClientState.LocalPlayer.Position.Z;
+        return position;
+    }
+
 }

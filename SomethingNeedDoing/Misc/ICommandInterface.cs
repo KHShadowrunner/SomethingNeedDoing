@@ -185,11 +185,23 @@ public interface ICommandInterface
     /// <returns>The item text, or an empty string.</returns>
     public string GetSelectIconStringText(int index);
 
-    // EXPERIMENTAL
     /// <summary>
-    /// Check to see if a spell is being cast
+    /// Check to see if a spell is being cast.
     /// </summary>
     public bool IsCasting();
 
+    /// <summary>
+    /// Check to see if in combat.
+    /// </summary>
     public bool InCombat();
+
+    /// <summary>
+    /// Get player's X position.
+    /// </summary>
+    public float GetXPosition();
+
+    /// <summary>
+    /// Get player's Z position.
+    /// </summary>
+    public float GetZPosition();
 }

@@ -69,6 +69,8 @@ internal static class MacroParser
             "/requirestats" => RequireStatsCommand.Parse(line),
             "/runmacro" => RunMacroCommand.Parse(line),
             "/send" => SendCommand.Parse(line),
+            "/senddown" => SendDownCommand.Parse(line),
+            "/sendup" => SendUpCommand.Parse(line),
             "/target" => TargetCommand.Parse(line),
             "/waitaddon" => WaitAddonCommand.Parse(line),
             "/wait" => WaitCommand.Parse(line),
